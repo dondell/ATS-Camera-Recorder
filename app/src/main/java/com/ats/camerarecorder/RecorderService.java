@@ -99,10 +99,28 @@ public class RecorderService extends Service {
         super.onDestroy();
     }
 
+    private int getCameraID() {
+        int cameraId = -1;
+        int numberOfCameras = Camera.getNumberOfCameras();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.CameraInfo info = new Camera.CameraInfo();
+            Camera.getCameraInfo(i, info);
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                Log.i(TAG, "xxx CAMERA_FACING_FRONT found. ID = " + i);
+                cameraId = i;
+                break;
+            } else if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                Log.i(TAG, "xxx CAMERA_FACING_BACK found. ID = " + i);
+                cameraId = i;
+            }
+        }
+        return cameraId;
+    }
+
     public boolean startRecording() {
         try {
             Toast.makeText(getBaseContext(), "Recording Started", Toast.LENGTH_SHORT).show();
-            mServiceCamera = Camera.open();
+            mServiceCamera = Camera.open(getCameraID());
             Camera.Parameters params = mServiceCamera.getParameters();
             mServiceCamera.setParameters(params);
             Camera.Parameters p = mServiceCamera.getParameters();
