@@ -1,4 +1,4 @@
-# CameraRecorder https://github.com/pickerweng/CameraRecorder
+# CameraRecorder 
 This is a sample project to show how to record video by camera in the background service.
 The sample need be built in API Level 16 (or later).
 
